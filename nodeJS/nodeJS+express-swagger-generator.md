@@ -4,6 +4,8 @@
 
 https://www.npmjs.com/package/express-swagger-generator
 
+> 示例地址：https://github.com/daraDu/nodeVue3App/tree/main/server
+
 ## 安装插件
 
 ```
@@ -36,7 +38,7 @@ let options = {
             title: 'api',
             version: '1.0.0'
         },
-        host: 'localhost:9001',
+        host: 'localhost:9000',
         basePath: '/',
         produces: ['application/json', 'application/xml'],
         schemes: ['http', 'https'],
@@ -238,7 +240,7 @@ module.exports = mongoose.model('user', UserSchema, 'user')
    * @param {string} pageSize.query.required - 每页数据条数
    * @param {number} isAdmin.query - 1-管理员 2-用户
    * @param {string} name.query - 成员姓名/手机号
-   * @returns {userListsRet.model} 200 - An array of user info
+   * @returns {Array.<userListsRet.model>} 200 - An array of user info
    * @returns {Error}  default - Unexpected error
    * @security JWT
    */
@@ -292,4 +294,35 @@ module.exports = mongoose.model('user', UserSchema, 'user')
     );
   });
 ```
+
+### post接口 接收query字段
+
+```js
+/**
+   * 项目阶段列表
+   * @route post /manHours/login
+   * @group user - 用户模块
+   * @param {loginBody.model} loginRet.body.required - the new point
+   * @returns {loginRet.model} 200 - An array of user info
+   * @returns {Error}  default - Unexpected error
+   */
+  /**
+   * @typedef loginBody
+    * @property {string} username  - 用户名
+    * @property {string} password  - 密码
+    * @property {number} channel  - 来源  1 web端登录 2 h5端登录
+   */
+  // 返回字段
+  /**
+   * @typedef loginRet
+    * @property {string} token  - token
+    * @property {string} id  - 用户id
+    * @property {string} name  - 姓名
+    * @property {string} username  - 用户名称
+   */
+```
+
+### 访问：http://localhost:9000/swagger/#/?docExpansion=none
+
+docExpansion=none 默认不展开（为了隐藏models）
 
